@@ -1,0 +1,82 @@
+#Game Review:
+#The game basics are that I should have 3 or more levels and that each level contains 4 or more
+#blanks to fill in.
+
+#When beginning the game, immediately after running the program, the user should be prompted
+#to select a difficulty level from easy/medium/hard.
+#Once a level is selected, the game displays a fill in the blank and a prompt to fill in the
+#first blank.
+
+#When a player guesses correctly, new prompt shows with correct ansewr in the previous blank
+#and a new prompt for the next blank.
+#When a player guess incorrectly, they are prompted to try again and for a bonus, try letting 
+#the user decide how many wrong guesses they can make before they lose. 
+
+
+#These lists and strings will serve for the easy mode of the game and the game will have three levels
+#and each level will have four blanks, along with each level, we will ask about certain
+#heroes, villains, and sidekicks.
+Easy_level_list = ["HERO", "VILLAIN", "SIDEKICK", "ACCOMPLICE"]
+
+Easy_level_answers = ["Batman", "Joker", "Batgirl", "Harley Quinn"]
+
+Easy_level1 = """HERO is the hero that protects the streets of Gotham and drives an iconic
+vehicle that lets his enemies know that he has arrived.
+VILLAIN is the person that has been a huge rival of Batman's for years and usually dresses
+up like a clown. SIDEKICK is a heroine that helps Batman and her alter ego is known as 
+Barbara Gordon. ACCOMPLICE is often seen with the Joker and had fallen in love with him
+when she worked at Arkham Asylum."""
+
+
+
+lives_input = raw_input("How many lives would you like to have and please enter in a number:\n")
+def number_of_lives(lives):
+	lives = int(lives)
+	if lives < 0:
+		print "You cannot use negative numbers..."
+		re_lives_input = raw_input("How many lives would you like to have and please enter in a number:\n")
+	print "Remember that this is how many mistakes you can make until it is GAME OVER!!!"
+	return lives
+
+
+def easy_answers(answer):
+	lifebar = number_of_lives(lives_input)
+	count = 0
+	while count <= 3:
+		answer_input = raw_input("Type in a " + answer[count] + ": ")
+		while answer_input != Easy_level_answers[count]:
+			lifebar = lifebar - 1
+			print lifebar
+			if lifebar == 0:
+				return "GAME OVER!!!"
+			print "Wrong answer! Please try again..."
+			answer_input = raw_input("Type in a: " + answer[count] + ": ")
+		if answer_input == Easy_level_answers[count]:
+			print lifebar
+				print "CORRECT!!!"
+		count += 1
+
+print easy_answers(Easy_level_list)
+
+
+def word_in_pos(word, parts_of_speech):
+	for pos in parts_of_speech:
+		if pos in word:
+			return pos
+	return None
+
+def play_easy_mode(ml_string, parts_of_speech):
+	replaced = []
+	ml_string = ml_string.split()
+	for word in ml_string:
+		replacement = word_in_pos(word, parts_of_speech)
+		if replacement != None:
+			user_input = raw_input("Type in a: " + replacement + " ")
+			word = word.replace(replacement, user_input)
+			replaced.append(word)
+		else:
+			replaced.append(word)
+	replaced = " ".join(replaced)
+	return replaced
+
+
